@@ -7,9 +7,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { TeamPartyItemInterface } from '@core/interfaces';
-import { PartyModel } from '@core/models';
-import { PartyService } from '@core/services';
+import { TeamPartyItemInterface } from '@coreParty/interfaces';
+import { PartyModel } from '@coreParty/models';
+import { PartyService } from '@coreParty/services';
 import { first, switchMap } from 'rxjs';
 
 @Component({

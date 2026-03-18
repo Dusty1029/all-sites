@@ -5,35 +5,35 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { GageModel } from '@core/models';
-import { GageService } from '@core/services';
+import { GameModel } from '@coreParty/models';
+import { GameService } from '@coreParty/services';
 import { filter, first, Observable, switchMap, tap } from 'rxjs';
-import { AddGageDialogComponent } from '../../components';
+import { AddGameDialogComponent } from '../../components';
 
 @Component({
-    selector: 'app-gages-list',
+    selector: 'app-games-list',
     standalone: true,
     imports: [CommonModule, MatTableModule, MatDividerModule, MatButtonModule, MatIconModule],
-    templateUrl: './gages-list.component.html',
-    styleUrl: './gages-list.component.scss',
+    templateUrl: './games-list.component.html',
+    styleUrl: './games-list.component.scss',
 })
-export class GagesListComponent implements OnInit {
-    readonly gageservice = inject(GageService);
+export class GamesListComponent implements OnInit {
+    readonly gameService = inject(GameService);
     readonly dialog = inject(MatDialog);
-    readonly gages: WritableSignal<GageModel[]> = signal([]);
+    readonly games: WritableSignal<GameModel[]> = signal([]);
 
-    readonly displayedColumns = ['name'];
+    readonly displayedColumns = ['name', 'isTeamGame'];
 
     ngOnInit(): void {
-        this.loadGages().subscribe();
+        this.loadGames().subscribe();
     }
 
-    loadGages(): Observable<GageModel[]> {
-        return this.gageservice.getGages().pipe(tap((gages) => this.gages.set(gages)));
+    loadGames(): Observable<GameModel[]> {
+        return this.gameService.getGames().pipe(tap((games) => this.games.set(games)));
     }
 
-    onAddGage(): void {
-        const dialogRef = this.dialog.open(AddGageDialogComponent, {
+    onAddGame(): void {
+        const dialogRef = this.dialog.open(AddGameDialogComponent, {
             width: '400px',
             disableClose: false,
         });
@@ -43,8 +43,8 @@ export class GagesListComponent implements OnInit {
             .pipe(
                 first(),
                 filter((result) => result),
-                switchMap((result) => this.gageservice.createGage({ name: result })),
-                switchMap(() => this.loadGages())
+                switchMap((result) => this.gameService.createGame(result)),
+                switchMap(() => this.loadGames())
             )
             .subscribe();
     }

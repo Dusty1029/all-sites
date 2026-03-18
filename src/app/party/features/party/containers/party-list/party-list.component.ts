@@ -6,8 +6,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { GageModel, GameModel, PlayerModel, SimplePartyModel } from '@core/models';
-import { GageService, GameService, PartyService, PlayerService } from '@core/services';
+import { GageModel, GameModel, PlayerModel, SimplePartyModel } from '@coreParty/models';
+import { GageService, GameService, PartyService, PlayerService } from '@coreParty/services';
 import { filter, first, forkJoin, switchMap } from 'rxjs';
 import { AddPartyDialogComponent } from '../../components';
 

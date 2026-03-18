@@ -14,8 +14,8 @@ import { RouterModule } from '@angular/router';
 export class MenuComponent {
   menuItems = [
     { label: 'Accueil', icon: 'home', route: '/party' },
-    { label: 'Joueurs', icon: 'person', route: '/players' },
-    { label: 'Jeux', icon: 'sports_esports', route: '/games' },
-    { label: 'Gages', icon: 'local_bar', route: '/gages' }
+    { label: 'Joueurs', icon: 'person', route: '/party/players' },
+    { label: 'Jeux', icon: 'sports_esports', route: '/party/games' },
+    { label: 'Gages', icon: 'local_bar', route: '/party/gages' }
   ];
 }

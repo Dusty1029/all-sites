@@ -5,35 +5,35 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { GameModel } from '@core/models';
-import { GameService } from '@core/services';
+import { PlayerModel } from '@coreParty/models';
+import { PlayerService } from '@coreParty/services';
 import { filter, first, Observable, switchMap, tap } from 'rxjs';
-import { AddGameDialogComponent } from '../../components';
+import { AddPlayerDialogComponent } from '../../components';
 
 @Component({
-    selector: 'app-games-list',
+    selector: 'app-players-list',
     standalone: true,
     imports: [CommonModule, MatTableModule, MatDividerModule, MatButtonModule, MatIconModule],
-    templateUrl: './games-list.component.html',
-    styleUrl: './games-list.component.scss',
+    templateUrl: './players-list.component.html',
+    styleUrl: './players-list.component.scss',
 })
-export class GamesListComponent implements OnInit {
-    readonly gameService = inject(GameService);
+export class PlayersListComponent implements OnInit {
+    readonly playerService = inject(PlayerService);
     readonly dialog = inject(MatDialog);
-    readonly games: WritableSignal<GameModel[]> = signal([]);
+    readonly players: WritableSignal<PlayerModel[]> = signal([]);
 
-    readonly displayedColumns = ['name', 'isTeamGame'];
+    readonly displayedColumns = ['name'];
 
     ngOnInit(): void {
-        this.loadGames().subscribe();
+        this.loadPlayers().subscribe();
     }
 
-    loadGames(): Observable<GameModel[]> {
-        return this.gameService.getGames().pipe(tap((games) => this.games.set(games)));
+    loadPlayers(): Observable<PlayerModel[]> {
+        return this.playerService.getPlayers().pipe(tap((players) => this.players.set(players)));
     }
 
-    onAddGame(): void {
-        const dialogRef = this.dialog.open(AddGameDialogComponent, {
+    onAddPlayer(): void {
+        const dialogRef = this.dialog.open(AddPlayerDialogComponent, {
             width: '400px',
             disableClose: false,
         });
@@ -43,8 +43,8 @@ export class GamesListComponent implements OnInit {
             .pipe(
                 first(),
                 filter((result) => result),
-                switchMap((result) => this.gameService.createGame(result)),
-                switchMap(() => this.loadGames())
+                switchMap((result) => this.playerService.createPlayers({ name: result })),
+                switchMap(() => this.loadPlayers())
             )
             .subscribe();
     }

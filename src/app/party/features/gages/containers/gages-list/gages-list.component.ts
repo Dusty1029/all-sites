@@ -5,35 +5,35 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { PlayerModel } from '@core/models';
-import { PlayerService } from '@core/services';
+import { GageModel } from '@coreParty/models';
+import { GageService } from '@coreParty/services';
 import { filter, first, Observable, switchMap, tap } from 'rxjs';
-import { AddPlayerDialogComponent } from '../../components';
+import { AddGageDialogComponent } from '../../components';
 
 @Component({
-    selector: 'app-players-list',
+    selector: 'app-gages-list',
     standalone: true,
     imports: [CommonModule, MatTableModule, MatDividerModule, MatButtonModule, MatIconModule],
-    templateUrl: './players-list.component.html',
-    styleUrl: './players-list.component.scss',
+    templateUrl: './gages-list.component.html',
+    styleUrl: './gages-list.component.scss',
 })
-export class PlayersListComponent implements OnInit {
-    readonly playerService = inject(PlayerService);
+export class GagesListComponent implements OnInit {
+    readonly gageservice = inject(GageService);
     readonly dialog = inject(MatDialog);
-    readonly players: WritableSignal<PlayerModel[]> = signal([]);
+    readonly gages: WritableSignal<GageModel[]> = signal([]);
 
     readonly displayedColumns = ['name'];
 
     ngOnInit(): void {
-        this.loadPlayers().subscribe();
+        this.loadGages().subscribe();
     }
 
-    loadPlayers(): Observable<PlayerModel[]> {
-        return this.playerService.getPlayers().pipe(tap((players) => this.players.set(players)));
+    loadGages(): Observable<GageModel[]> {
+        return this.gageservice.getGages().pipe(tap((gages) => this.gages.set(gages)));
     }
 
-    onAddPlayer(): void {
-        const dialogRef = this.dialog.open(AddPlayerDialogComponent, {
+    onAddGage(): void {
+        const dialogRef = this.dialog.open(AddGageDialogComponent, {
             width: '400px',
             disableClose: false,
         });
@@ -43,8 +43,8 @@ export class PlayersListComponent implements OnInit {
             .pipe(
                 first(),
                 filter((result) => result),
-                switchMap((result) => this.playerService.createPlayers({ name: result })),
-                switchMap(() => this.loadPlayers())
+                switchMap((result) => this.gageservice.createGage({ name: result })),
+                switchMap(() => this.loadGages())
             )
             .subscribe();
     }
