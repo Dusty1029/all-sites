@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Créer une partie</h2>
+<mat-dialog-content [formGroup]="form">
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nombre d'équipes (pair)</mat-label>
+        <input matInput type="number" formControlName="numberOfTeam" />
+        @if(form.get('numberOfTeam')?.hasError('notEven')) {
+        <mat-error> Le nombre doit être pair </mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Joueurs</mat-label>
+        <mat-select formControlName="playerIds" multiple>
+            @for(player of data.players; track player.id) {
+            <mat-option [value]="player.id">
+                {{ player.name }}
+            </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Jeux</mat-label>
+        <mat-select formControlName="gameIds" multiple>
+            @for(game of data.games; track game.id) {
+            <mat-option [value]="game.id">
+                {{ game.name }}
+            </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Gages</mat-label>
+        <mat-select formControlName="gageIds" multiple>
+            @for(gage of data.gages; track gage.id) {
+            <mat-option [value]="gage.id">
+                {{ gage.name }}
+            </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Annuler</button>
+    <button mat-button color="primary" (click)="submit()" [disabled]="form.invalid">Valider</button>
+</mat-dialog-actions>

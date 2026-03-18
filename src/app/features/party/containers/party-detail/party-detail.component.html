@@ -1,0 +1,103 @@
+<div class="table-header">
+    <h2>{{ party()?.name }}</h2>
+</div>
+
+<table mat-table [dataSource]="teams()" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Équipe</th>
+        <td mat-cell *matCellDef="let team">{{ team.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="points">
+        <th mat-header-cell *matHeaderCellDef>Points</th>
+        <td mat-cell *matCellDef="let team">{{ team.points }}</td>
+    </ng-container>
+
+    @for(i of [].constructor(maxNumberPlayers); track i; let idx = $index) {
+    <ng-container [matColumnDef]="'player' + idx">
+        <th mat-header-cell *matHeaderCellDef>Joueur {{ idx + 1 }}</th>
+        <td mat-cell *matCellDef="let team">
+            {{ team.playerNames[idx] }}
+        </td>
+    </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<div class="party-round-container">
+    <section class="round-intro">
+        <h1>Prochain Round</h1>
+    </section>
+
+    <mat-card class="game-card">
+        <h2>{{ party()?.round?.gameName }}</h2>
+        <p class="game-description">Préparez-vous pour ce défi !</p>
+    </mat-card>
+
+    <mat-card class="teams-card">
+        @if(party()?.round?.isTeamRound) {
+        <h3>Toutes les équipes participent</h3>
+        <p>Sélectionnez l’équipe gagnante :</p>
+        <div class="teams-chips">
+            @for(team of teams(); track team?.id) {
+            <mat-chip
+                color="primary"
+                [class.selected]="selectedWinner() === team.id"
+                (click)="selectWinner(team.id)"
+            >
+                {{ team.name }}
+            </mat-chip>
+            }
+        </div>
+        } @else {
+        <h3>Participants de ce round :</h3>
+        <ul class="participants-list">
+            @for(team of [party()?.round?.teamOne, party()?.round?.teamTwo]; track team?.id) {
+            <li>
+                <mat-icon color="primary">person</mat-icon>
+                {{ team?.name }}
+            </li>
+            }
+        </ul>
+        <p>Sélectionnez l'équipe gagnante :</p>
+        <div class="teams-chips">
+            @for(team of [party()?.round?.teamOne, party()?.round?.teamTwo]; track team?.id) {
+            <mat-chip
+                [class.selected]="selectedWinner() === team?.id"
+                (click)="selectWinner(team?.id)"
+            >
+                {{ team?.name }}
+            </mat-chip>
+            }
+        </div>
+        }
+    </mat-card>
+
+    <mat-card class="gage-card">
+        <h2>Gage du round</h2>
+        <p class="gage-text">{{ party()?.round?.gageName }}</p>
+    </mat-card>
+
+    <div class="round-actions">
+        <button
+            mat-stroked-button
+            color="warn"
+            (click)="cancelRound()"
+            [disabled]="party()?.actualRound === 1"
+        >
+            Annuler round
+        </button>
+        @if(!party()?.isFinish) {
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="nextRound()"
+            [disabled]="!selectedWinner()"
+        >
+            Round suivant
+        </button>
+        }
+    </div>
+</div>

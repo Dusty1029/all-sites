@@ -1,0 +1,1 @@
+export * from './team-party-item.interface';
