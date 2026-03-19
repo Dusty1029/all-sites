@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
-import { CreateGameModel, GameModel } from '../models';
+import { BaseService } from '@shared/services';
 import { Observable } from 'rxjs';
+import { CreateGameModel, GameModel } from '../models';
 
 @Injectable({
     providedIn: 'root',
 })
 export class GameService extends BaseService<GameModel, CreateGameModel> {
-    private readonly baseUrl = '/games';
+    private readonly baseUrl = '/party/games';
 
     getGames(): Observable<GameModel[]> {
         return this.getAll(this.baseUrl);

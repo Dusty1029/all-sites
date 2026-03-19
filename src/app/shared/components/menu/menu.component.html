@@ -1,21 +1,29 @@
 <aside class="sidebar">
     <div class="logo">
-        <mat-icon>dashboard</mat-icon>
-        <span>Party</span>
-    </div>
-
-    <nav>
-        @for(item of menuItems; track item) {
         <button
             mat-button
             class="menu-item"
-            [routerLink]="item.route"
+            [routerLink]="'/'"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
         >
-            <mat-icon>{{ item.icon }}</mat-icon>
-            <span>{{ item.label }}</span>
+            <mat-icon>dashboard</mat-icon>
         </button>
+        <span>{{ menuConfig().name }}</span>
+    </div>
+
+    <nav>
+        @for (item of menuConfig().menuItems; track item) {
+            <button
+                mat-button
+                class="menu-item"
+                [routerLink]="item.route"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+            >
+                <mat-icon>{{ item.icon }}</mat-icon>
+                <span>{{ item.label }}</span>
+            </button>
         }
     </nav>
 </aside>

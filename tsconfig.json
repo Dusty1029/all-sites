@@ -17,7 +17,8 @@
     "baseUrl": "src",
     "paths": {
       "@shared/*": ["app/shared/*"],
-      "@coreParty/*": ["app/party/core/*"]
+      "@coreParty/*": ["app/party/core/*"],
+      "@CoreRallye/*": ["app/rallye/core/*"]
     }
   },
   "angularCompilerOptions": {

@@ -1,6 +1,22 @@
-<div class="app-container">
-    <app-menu></app-menu>
-    <main class="content">
-        <router-outlet></router-outlet>
-    </main>
-</div>
+@if (menuConfig() == null) {
+    <div class="dashboard-container">
+        <div class="dashboard">
+            @for (app of apps; track app.route) {
+                <mat-card class="app-card" [routerLink]="app.route">
+                    <mat-card-title>{{ app.name }}</mat-card-title>
+                    <mat-card-content>
+                        {{ app.desc }}
+                    </mat-card-content>
+                </mat-card>
+            }
+        </div>
+    </div>
+} @else {
+    <div class="app-container">
+        <app-menu [menuConfig]="menuConfig()!"></app-menu>
+        <main class="content">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+}
+

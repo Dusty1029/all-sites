@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { numericIdGuard } from '@shared/guards';
+import { numericUUIDGuard } from '@shared/guards';
 
 export const PARTY_ROUTES: Routes = [
     {
@@ -32,12 +32,12 @@ export const PARTY_ROUTES: Routes = [
     },
     {
         path: ':id',
-        canActivate: [numericIdGuard],
+        canActivate: [numericUUIDGuard],
         data: {
             redirectTo: '/party',
         },
         loadComponent: () =>
-            import('./features/party/containers//party-detail/party-detail.component').then(
+            import('./features/party/containers/party-detail/party-detail.component').then(
                 (m) => m.PartyDetailComponent,
             ),
     },

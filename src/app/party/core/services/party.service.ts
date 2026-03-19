@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
+import { BaseService } from '@shared/services';
 import { Observable } from 'rxjs';
 import { CreatePartyModel, PartyModel, SimplePartyModel } from '../models';
-import { BaseService } from './base.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PartyService extends BaseService<PartyModel, CreatePartyModel> {
-    private readonly baseUrl = '';
+    private readonly baseUrl = '/party';
 
     getParties(): Observable<SimplePartyModel[]> {
         return this.getAll(this.baseUrl);
     }
 
     getPartyById(id: string): Observable<PartyModel> {
-        return this.getById(`/${id}`);
+        return this.getById(`${this.baseUrl}/${id}`);
     }
 
     createParty(createParty: CreatePartyModel): Observable<string> {
@@ -22,10 +22,10 @@ export class PartyService extends BaseService<PartyModel, CreatePartyModel> {
     }
 
     getNextRound(partyId: string, winningTeamId: string): Observable<PartyModel> {
-        return this.update(`/${partyId}/winningTeam/${winningTeamId}`);
+        return this.update(`${this.baseUrl}/${partyId}/winningTeam/${winningTeamId}`);
     }
 
     cancelPreviousRound(partyId: string): Observable<PartyModel> {
-        return this.update(`/${partyId}/cancel`);
+        return this.update(`${this.baseUrl}/${partyId}/cancel`);
     }
 }

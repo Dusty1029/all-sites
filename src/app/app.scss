@@ -9,3 +9,50 @@
   }
 }
 
+/* Container centré */
+.dashboard-container {
+  min-height: 100vh; /* prend toute la hauteur écran */
+  display: flex;
+  justify-content: center; /* centre horizontal */
+  align-items: center;     /* centre vertical */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Grid propre et limitée en largeur */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 900px;
+  width: 100%;
+  gap: 24px;
+}
+
+/* Cartes stylées */
+.app-card {
+  cursor: pointer;
+  padding: 24px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1976d2, #42a5f5);
+  color: white;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover stylé */
+.app-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Texte */
+mat-card-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+mat-card-content {
+  font-size: 1rem;
+  opacity: 0.9;
+}

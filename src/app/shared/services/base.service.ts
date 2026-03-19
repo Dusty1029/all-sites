@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root',
 })
 export class BaseService<T, Y> {
-    private readonly baseApiUrl = 'http://192.168.0.138:7212/api/v1/party';
+    private readonly baseApiUrl = 'http://192.168.0.138:7212/api/v1';
 
     protected http = inject(HttpClient);
 

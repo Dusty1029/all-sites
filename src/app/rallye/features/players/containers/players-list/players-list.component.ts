@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { PlayerService } from '@coreParty/services';
+import { PlayerService } from '@CoreRallye/services';
 import { GenericPlayersListComponent } from '@shared/components';
 import { PlayerInterface } from '@shared/interfaces';
 import { first, Observable, switchMap, tap } from 'rxjs';
