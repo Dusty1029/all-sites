@@ -1,2 +1,2 @@
-export * from './numeric.guard';
+export * from './uuid.guard';
 

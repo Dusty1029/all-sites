@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { GageModel, GameModel, PlayerModel } from '@coreParty/models';
+import { minSelected } from '@shared/validators';
 
 export interface AddPartyDialogData {
     players: PlayerModel[];
@@ -42,9 +43,9 @@ export class AddPartyDialogComponent {
     form = this.fb.group({
         name: ['', Validators.required],
         numberOfTeam: [null, [Validators.required, this.evenNumberValidator]],
-        playerIds: [[], this.minSelected(1)],
-        gameIds: [[], this.minSelected(1)],
-        gageIds: [[], this.minSelected(1)],
+        playerIds: [[], minSelected(1)],
+        gameIds: [[], minSelected(1)],
+        gageIds: [[], minSelected(1)],
     });
 
     close() {
@@ -61,15 +62,5 @@ export class AddPartyDialogComponent {
         const value = control.value;
         if (value == null || value === '') return null;
         return value % 2 === 0 ? null : { notEven: true };
-    }
-
-    minSelected(min: number) {
-        return (control: AbstractControl): ValidationErrors | null => {
-            const value = control.value;
-            if (!Array.isArray(value)) return { invalidArray: true };
-            return value.length >= min
-                ? null
-                : { minSelected: { required: min, actual: value.length } };
-        };
     }
 }

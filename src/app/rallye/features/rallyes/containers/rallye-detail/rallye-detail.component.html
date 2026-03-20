@@ -1,0 +1,55 @@
+<div class="table-header">
+    <h2>{{ rallyeName() }}</h2>
+</div>
+
+<table [dataSource]="specials()" mat-table class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Spécial</th>
+        <td mat-cell *matCellDef="let special">{{ special.name }}</td>
+    </ng-container>
+
+    @for (player of players(); track player; let idx = $index) {
+        <ng-container [matColumnDef]="player.name">
+            <th mat-header-cell *matHeaderCellDef>{{ player.name }}</th>
+            <td mat-cell *matCellDef="let special">
+                {{ special.specialTimes[0]?.time }}
+            </td>
+        </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<form style="padding-top: 20px" [formGroup]="specialForm" (ngSubmit)="createSpecial()">
+    <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="name" placeholder="Entrez un nom" />
+
+        <mat-error *ngIf="specialForm.get('name')?.hasError('required')">
+            Le nom est obligatoire
+        </mat-error>
+    </mat-form-field>
+
+    <button style="padding-top: 10px" mat-raised-button color="primary" type="submit">Créer</button>
+</form>
+
+<form style="padding-top: 20px" [formGroup]="specialForm" (ngSubmit)="createSpecial()">
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Joueur</mat-label>
+        <mat-select formControlName="player">
+            @for (player of players(); track player.id) {
+                <mat-option [value]="player.id">
+                    {{ player.name }}
+                </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Temps</mat-label>
+        <input matInput placeholder="HH:mm">
+    </mat-form-field>
+
+    <button style="padding-top: 10px" mat-raised-button color="primary" type="submit">Créer</button>
+</form>
