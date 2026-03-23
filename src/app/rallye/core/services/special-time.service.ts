@@ -13,7 +13,7 @@ import {
 export class SpecialTimeService extends BaseService<SpecialTimeInterface, CreateSpecialTimeInterface> {
     private readonly baseUrl = '/rallye/{rallyeId}/special/{specialId}/time';
 
-    createSpecial(
+    createSpecialTime(
         rallyeId: string,
         specialId: string,
         createSpecial: CreateSpecialTimeInterface,
